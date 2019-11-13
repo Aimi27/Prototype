@@ -1,0 +1,77 @@
+# Imports the Google Cloud client library
+# from google.cloud import language
+# from google.cloud.language import enums
+# from google.cloud.language import types
+
+# Libraries essential to produce a word cloud
+import numpy as np
+from os import path
+from PIL import Image
+from wordcloud import WordCloud, STOPWORDS, ImageColorGenerator
+
+import matplotlib.pyplot as plt
+
+
+def language_analysis(text):
+    # Instantiates a client
+    client = language.LanguageServiceClient()
+
+    # Configuring document from text
+    document = types.Document(
+        content=text,
+        type=enums.Document.Type.PLAIN_TEXT)
+    # Analyzing sentiments
+    sentiment = client.analyze_sentiment(document=document).document_sentiment
+
+    # Available values: NONE, UTF8, UTF16, UTF32
+    encoding_type = enums.EncodingType.UTF8
+    # Analyzing entities
+    entities = client.analyze_entities(document, encoding_type=encoding_type).entities
+    return sentiment, entities
+
+
+example_text = 'Crops are living plants grown by farmers. Most crops are foods such as grain, vegetables, or fruit. Some crops are for drugs, such as quinine, or fibers such as cotton, or other materials such as rubber or wood. Farms are usually made to grow just one kind of crop.'
+
+# Creating a file
+f= open("/Users/paumik/Documents/Group Project/Python/analysisOutput.txt","w+")
+
+sentiment, entities = language_analysis(example_text)
+f.write(u"Sentiment score: {}\n".format(sentiment.score))
+f.write(u"Sentiment magnitude: {}\n".format(sentiment.magnitude))
+
+# Loop through entitites returned from the API
+for entity in entities:
+    f.write("______________________________________________________________________________\n")
+    f.write(u"Representative name for the entity: {}\n".format(entity.name))
+    # Get entity type, e.g. PERSON, LOCATION, ADDRESS, NUMBER, et al
+    f.write(u"Entity type: {}\n".format(enums.Entity.Type(entity.type).name))
+    # Get the salience score associated with the entity in the [0, 1.0] range
+    f.write(u"Salience score: {}\n".format(entity.salience))
+    # Loop over the metadata associated with entity. For many known entities,
+    # the metadata is a Wikipedia URL (wikipedia_url) and Knowledge Graph MID (mid).
+    # Some entity types may have additional metadata, e.g. ADDRESS entities
+    # may have metadata for the address street_name, postal_code, et al.
+    for metadata_name, metadata_value in entity.metadata.items():
+        f.write(u"{}: {}".format(metadata_name, metadata_value))
+
+    # Loop over the mentions of this entity in the input document.
+    # The API currently supports proper noun mentions.
+    for mention in entity.mentions:
+        f.write(u"Mention text: {}\n".format(mention.text.content))
+        # Get the mention type, e.g. PROPER for proper noun
+        f.write(
+            u"Mention type: {}\n".format(enums.EntityMention.Type(mention.type).name)
+        )
+    f.write("______________________________________________________________________________\n")
+
+f.close()
+
+
+ # producing a word cloud
+wordcloud = WordCloud().generate(example_text)
+wordcloud = WordCloud(max_font_size=50, max_words=100, background_color="white").generate(example_text)
+plt.figure()
+plt.imshow(wordcloud, interpolation="bilinear")
+plt.axis("off")
+plt.show()
+ # saving word cloud into a file.

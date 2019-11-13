@@ -1,0 +1,376 @@
+Lab 4 - Question 1
+
+/*
+
+step 1 - IN MAIN FUNCTION, input length of radius
+step 2 - calls function and display return value
+step 3 - create new function called area( )
+step 4 - in this function, calculate area with formula pi r square
+step 5 - return the area to main function
+
+*/
+
+#include <stdio.h>
+
+float area(float y); //function prototype
+
+void main(void)
+{
+	float radius; //declaration
+	
+	printf("Enter length of radius: ");
+	scanf("%f",&radius);
+	
+	printf("Area of circle is: %.2f\n",area(radius)); //function call
+}
+
+float area(float y) //function to calculate area
+{
+	float areaofcircle; //declaration
+	
+	areaofcircle = 3.142*y*y;
+	
+	return areaofcircle;
+}
+
+*********************************************************************************************************
+lab 4 - question 2
+
+/*
+
+main function
+step 1 - inputs 3 grades
+step 2 - calls function to display minimum of the three grades
+
+function prototype
+step 1 - check between 1 and 2, then 1 and 3
+		if true, then assign 1 as minimum
+step 2 - check between 2 and 3
+		if true, then assign 2 as minimum
+step 3 - if false, that makes 3 the minimum
+		assign 3 as minimum
+step 4 - return minimum
+
+*/
+
+#include <stdio.h>
+
+int minimum(int x,int y,int z); //function prototype
+
+void main(void)
+{
+	//declaration
+	int grade1,grade2,grade3;
+	
+	//input 3 grades
+	printf("Enter 3 grades seperated with a space: ");
+	scanf("%d %d %d",&grade1,&grade2,&grade3);
+	
+	//calls function
+	printf("Minimum grade out of the three is: %d\n",minimum(grade1,grade2,grade3));
+}
+
+int minimum(int x,int y,int z)
+{
+	//declaration
+	int min;
+	
+	//checking if x is the minimum
+	min = (x<y && x<z)?x:y;
+	
+	//checking if y or z is minimum
+	if(min==y)
+	{
+		min = (y<z)?y:z;
+	}
+	
+	//return minimum
+	return min;
+}
+*****************************************************************************************************
+Lab 4 - Question 4 ((can't do question 3, lol))
+
+#include <stdio.h>
+
+//function prototypes
+int squareofnumber(int a);
+int cubeofnumber(int b);
+
+//main function
+int main(void)
+{
+	//declaration
+	int number,x,y,sum;
+	
+	//input from user
+	printf("Enter an integer: ");
+	scanf("%d",&number);
+	
+	//display sum
+	sum = (squareofnumber(number))+(cubeofnumber(number));
+	printf("Sum of %d squared and %d cubed is %d\n",number,number,sum);
+}
+
+int squareofnumber(int a)
+{
+	//declaration
+	int square_result;
+	
+	//calculation
+	square_result = a*a;
+	
+	//return
+	return square_result;
+}
+
+int cubeofnumber(int a)
+{
+	//declaration
+	int cube_result;
+	
+	//calculation
+	cube_result = a*a*a;
+	
+	//return
+	return cube_result;
+}
+***********************************************************************************************
+lab 4 - question 5
+
+/*function to input price of three items and return average of those within 1 to 5*/
+
+#include <stdio.h>
+
+//function prototypes
+float dispaverage(float a,float b,float c);
+
+//main function
+float main()
+{
+	//declaration
+	float item1,item2,item3;
+	
+	//input prices
+	printf("Enter price of item 1: ");
+	scanf("%f",&item1);
+	
+	printf("Enter price of item 2: ");
+	scanf("%f",&item2);
+	
+	printf("Enter price of item 3: ");
+	scanf("%f",&item3);
+	
+	//display average
+	printf("Average is %.2f\n",dispaverage(item1,item2,item3));
+}
+
+//function to return average
+float dispaverage(float a,float b,float c)
+{
+	//declaration
+	float x,y,z;
+	float first_average,final_average;
+	int denominator=0;
+	
+	//checks item 1
+	if(a>=1 && a<=5)
+	{
+		x = a;
+		denominator++;
+	}
+	else
+	{
+		x = 0;
+	}
+	
+	//checks item 2
+	if(b>=1 && b<=5)
+	{
+		y = b;
+		denominator++;
+	}
+	else
+	{
+		y = 0;
+	}
+	
+	//checks item 3
+	if(c>=1 && c<=5)
+	{
+		z = c;
+		denominator++;
+	}
+	else
+	{
+		z = 0;
+	}
+	
+	//calculate average
+	first_average = x+y+z;
+	final_average = first_average/denominator;
+	
+	//return average
+	return final_average;	
+}
+********************************************************************************************
+lab 4 - question 6
+
+/* function to print random number between 0 to 3 */
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(void)
+{	
+	float i = rand() % 4;
+	
+	printf("A random number between 0 and 3 is %.2f\n",i);
+	
+}
+*********************************************************************************************
+Lab 5 - question 1
+
+#include <stdio.h>
+
+int main()
+{
+	//declaration of array
+	int array1[5] = {10,20,30,40,50};
+	int i;
+	
+	printf("The elements greater than 20 are: \n");
+	
+	//print elements greater than 20
+	for(i=0;i<5;i++)
+	{
+		if(array1[i]>20)
+		{
+			printf("%d\n",array1[i]);
+		}
+	}
+}
+**********************************************************************************************
+lab 5 - question 2
+
+#include <stdio.h>
+
+int main()
+{
+	//declaration
+	int arrayoften[10];
+	int i;
+	
+	//assigning random values from 0 to 20 to its elements
+	for(i=0;i<10;i++)
+	{
+		arrayoften[i] = rand() % 21;
+		printf("%d\n",arrayoften[i]);
+	}
+}
+**********************************************************************************************
+lab 5 - question 3
+
+/*
+step 1 - input 10 integers from user to store in an array
+step 2 - check if a[0] == a[9]
+step 3 - then if a[1] == a[8]
+step 4 - display if array is symmetric
+*/
+
+#include <stdio.h>
+
+int main()
+{
+	//declaration
+	int array1[10];
+	int i,m,n,symmetric;
+	
+	//input from user
+	for(i=0;i<10;i++)
+	{
+		printf("Enter an integer: ");
+		scanf("%d",&array1[i]);
+	}
+	
+	/*
+	//testing to display the array
+	for(i=0;i<10;i++)
+	{
+		printf("%d ",array1[i]);
+	}
+	*/
+	
+	for(m=0,n=9;m<=4;m++,n--)
+	{
+		if(array1[m] == array1[n])
+			symmetric = 1;
+		else
+			symmetric = 0;
+	}
+	
+	if(symmetric == 1)
+	{
+		printf("\nArray is symmetrical\n");
+	}
+	else
+	{
+		printf("\nArray is not symmetrical\n");
+	}
+	
+}
+*********************************************************************************
+lab 5 - question 4 ((incomplete // wrong code))
+
+/*
+step 1 - input 10 integers
+step 2 - if i[0],i[2],i[4],i[6] and so on have elements that are even,
+		store them in the array
+step 3 - if i[1],i[3],i[5],i[7] and so on have elements that are odd,
+		store them in the array
+step 4 - check if values 0 and -1 are inserted, if yes, set them to -1
+step 5 - display the final elements of the array
+*/
+
+#include <stdio.h>
+
+int main()
+{
+	//declaration
+	int a[10];
+	int i,j,m;
+	
+	//input 10 integers
+	for(i=0;i<10;i++)
+	{
+		printf("Enter an integer: ");
+		scanf("%d",&a[i]);
+		
+		for(j=0,m=1;j<10;j+2,m+2)
+		{
+			if(a[j] % 2 == 0 || a[m] % 2 != 0)
+			{
+				for(i=0;i<10;i++)
+				{
+					if(a[i] == 0 && a[i] == -1)
+					{
+						a[i] = -1;
+					}
+				}	
+			}
+			else
+			{
+				a[j] = -1;
+				a[m] = -1;
+			}
+		}
+	}
+	
+	
+	
+	//display final elements in the array
+	for(i=0;i<10;i++)
+	{
+		printf("%d ",a[i]);
+	}
+}
+****************************************************************************

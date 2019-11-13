@@ -1,0 +1,37 @@
+--Aimi Syahirah Sazali (2004176)
+--Haskell Coursework
+import Data.Char
+
+chomp :: String -> String
+chomp str = takeWhile (== head str) str
+
+munch :: String -> String
+munch = take 9 . chomp           --9 is the most number of characters it will take
+
+runs :: String -> [String]
+runs string = extract string [] where
+    extract str xs
+	    | length str == 0 = xs
+		| otherwise = extract (drop(length(munch str)) str) (xs ++ [(munch str)])
+		
+encode :: String -> [(Char,Int)]
+encode = map(\x -> (head x,length x)) . runs    -- applying runs in encode
+
+flatten :: [(Char,Int)] -> String
+flatten [] = []
+flatten ((ca,cb):cs) = ca:(show cb ++ flatten cs) 
+
+compress :: String -> String
+compress str = flatten (encode str)
+
+decode :: [(Char,Int)] -> String
+decode [] = []
+decode ((x,y):xs) = [ns | ns <- replicate y x] ++ decode xs
+
+expand :: String -> [(Char,Int)]
+expand [] = []
+expand (x:y:ys) = [(x,digitToInt y)] ++ expand ys
+ 
+
+decompress :: String -> String
+decompress str = decode(expand str)   -- applying decode and expand in decompress
